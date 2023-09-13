@@ -83,7 +83,7 @@ lookup equal_less_less {
   sub equal' less less by equal_less_less.liga;
 } equal_less_less;
 
-### Less - It is convenient to have this lookup set at the start. 
+### Less - It is convenient to have this lookup set at the start.
 lookup less_asciitilde {
   sub less_asciitilde.liga   asciitilde'  by LIG;
   ignore sub less less' asciitilde;
@@ -159,7 +159,7 @@ lookup less_bar_bar_bar {
   sub less_bar_bar.liga'    LIG   LIG   bar   by less_bar_bar_bar.liga;
 } less_bar_bar_bar;
 
-# generally it is useful to have the duplicating sequences in a row. This avoids potential badness. 
+# generally it is useful to have the duplicating sequences in a row. This avoids potential badness.
 
 lookup less_less {
   sub less_less.liga  less'  by LIG;
@@ -176,7 +176,7 @@ lookup less_less {
 } less_less;
 
 lookup less_less_equal {
-  sub less_less_equal.liga LIG equal' by equal;
+  sub less_less_equal.liga LIG equal' by LIG;
   sub less_less.liga' LIG equal by less_less_equal.liga;
 } less_less_equal;
 
@@ -843,34 +843,31 @@ lookup equal_arrows {
   ignore sub bar bar' equal;
   ignore sub [equal_start.seq equal_middle.seq] bar' bar bar;
 
-
   # equal middle & end
-  sub [less_equal_start.seq less_equal_middle.seq greater_equal_start.seq greater_equal_middle.seq bar_equal_start.seq bar_equal_middle.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq equal_start.seq equal_middle.seq] equal' [equal less greater bar slash colon exclam] by equal_middle.seq;
+  sub [less_equal_start.seq greater_equal_start.seq bar_equal_start.seq slash_equal_start.seq] equal' [less greater bar slash colon exclam] by equal_middle.seq;
 
-  sub [less_less_equal_start.seq less_less_equal_middle.seq greater_greater_equal_start.seq greater_greater_equal_middle.seq  bar_bar_equal_start.seq bar_bar_equal_middle.seq slash_slash_equal_start.seq slash_slash_equal_middle.seq] LIG equal' [equal less greater bar slash colon exclam] by equal_middle.seq;
-
-  sub [less_equal_start.seq less_equal_middle.seq greater_equal_start.seq greater_equal_middle.seq bar_equal_start.seq bar_equal_middle.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq equal_start.seq equal_middle.seq] equal' by equal_end.seq;
+  sub [less_equal_start.seq less_equal_middle.seq greater_equal_start.seq greater_equal_middle.seq bar_equal_start.seq bar_equal_middle.seq slash_equal_start.seq slash_equal_middle.seq colon_equal_middle.seq exclam_equal_middle.seq] equal' by equal_end.seq;
 
   sub [less_less_equal_start.seq less_less_equal_middle.seq greater_greater_equal_start.seq greater_greater_equal_middle.seq bar_bar_equal_start.seq bar_bar_equal_middle.seq slash_slash_equal_start.seq slash_slash_equal_middle.seq] LIG equal' by equal_end.seq;
 
 
   # double middles
-  sub [equal_start.seq equal_middle.seq] less_less_equal_middle.seq       less'    equal by LIG;
-  sub [equal_start.seq equal_middle.seq] less'                            less     equal by less_less_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] greater_greater_equal_middle.seq greater' equal by LIG;
-  sub [equal_start.seq equal_middle.seq] greater'                         greater  equal by greater_greater_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] bar_bar_equal_middle.seq         bar'     equal by LIG;
-  sub [equal_start.seq equal_middle.seq] bar'                             bar      equal by bar_bar_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] slash_slash_equal_middle.seq     slash'   equal by LIG;
-  sub [equal_start.seq equal_middle.seq] slash'                           slash    equal by slash_slash_equal_middle.seq;
+  sub equal_start.seq less_less_equal_middle.seq       less'    equal by LIG;
+  sub equal_start.seq less'                            less     equal by less_less_equal_middle.seq;
+  sub equal_start.seq greater_greater_equal_middle.seq greater' equal by LIG;
+  sub equal_start.seq greater'                         greater  equal by greater_greater_equal_middle.seq;
+  sub equal_start.seq bar_bar_equal_middle.seq         bar'     equal by LIG;
+  sub equal_start.seq bar'                             bar      equal by bar_bar_equal_middle.seq;
+  sub equal_start.seq slash_slash_equal_middle.seq     slash'   equal by LIG;
+  sub equal_start.seq slash'                           slash    equal by slash_slash_equal_middle.seq;
 
   # single middles
-  sub [equal_start.seq equal_middle.seq] less'    equal by less_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] greater' equal by greater_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] bar'     equal by bar_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] slash'   equal by slash_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] colon'   equal by colon_equal_middle.seq;
-  sub [equal_start.seq equal_middle.seq] exclam'  equal by exclam_equal_middle.seq;
+  sub equal_start.seq less'    equal by less_equal_middle.seq;
+  sub equal_start.seq greater' equal by greater_equal_middle.seq;
+  sub equal_start.seq bar'     equal by bar_equal_middle.seq;
+  sub equal_start.seq slash'   equal by slash_equal_middle.seq;
+  sub equal_start.seq colon'   equal by colon_equal_middle.seq;
+  sub equal_start.seq exclam'  equal by exclam_equal_middle.seq;
 
   # double ends
   sub [equal_start.seq equal_middle.seq] less_less_equal_end.seq        less'    by LIG;
@@ -900,20 +897,21 @@ lookup equal_arrows {
 
   # Disable >=< #548
   sub greater' equal less [equal less] by greater_equal_start.seq;
-  ignore sub greater' equal less;
-  
+  ignore sub greater' equal  less;
+  ignore sub greater  equal' less;
+
   # Disable =< #479 #468 #424 #406 #355 #305
   sub equal' less [equal less] by equal_start.seq;
 
   # Disable =/ #1056
-  sub equal'   slash [equal slash] by equal_start.seq; 
+  sub equal'   slash [equal slash] by equal_start.seq;
 
   # single beginnings
-  sub less'    equal [equal less greater bar slash colon exclam] by less_equal_start.seq; # disable >= <= as they're used in math
+  sub less'    equal [equal less greater bar slash colon exclam] by less_equal_start.seq; # disable >= <= as they are used in math
   sub greater' equal [equal less greater bar slash colon exclam] by greater_equal_start.seq;
-  sub bar'     equal [equal less greater bar slash colon exclam] by bar_equal_start.seq; # disable |= 
+  sub bar'     equal [equal less greater bar slash colon exclam] by bar_equal_start.seq; # disable |=
   sub slash'   equal by slash_equal_start.seq;
-  sub equal'  [equal greater bar colon exclam] by equal_start.seq;
+  sub equal'  [less greater bar colon exclam] by equal_start.seq;
 
 } equal_arrows;
 
@@ -926,26 +924,24 @@ lookup hyphen_arrows {
   ignore sub [hyphen_start.seq hyphen_middle.seq] bar' bar bar;
 
   # hyphen middle & end
-  sub [less_hyphen_start.seq less_hyphen_middle.seq greater_hyphen_start.seq greater_hyphen_middle.seq bar_hyphen_start.seq bar_hyphen_middle.seq hyphen_start.seq hyphen_middle.seq] hyphen' [hyphen less greater bar] by hyphen_middle.seq;
+  sub [less_hyphen_start.seq greater_hyphen_start.seq bar_hyphen_start.seq] hyphen' [less greater bar colon exclam] by hyphen_middle.seq;
 
-  sub [less_less_hyphen_start.seq less_less_hyphen_middle.seq greater_greater_hyphen_start.seq greater_greater_hyphen_middle.seq bar_bar_hyphen_start.seq bar_bar_hyphen_middle.seq] LIG hyphen' [hyphen less greater bar] by hyphen_middle.seq;
-
-  sub [less_hyphen_start.seq less_hyphen_middle.seq greater_hyphen_start.seq greater_hyphen_middle.seq bar_hyphen_start.seq bar_hyphen_middle.seq hyphen_start.seq hyphen_middle.seq] hyphen' by hyphen_end.seq;
+  sub [less_hyphen_start.seq less_hyphen_middle.seq greater_hyphen_start.seq greater_hyphen_middle.seq bar_hyphen_start.seq bar_hyphen_middle.seq] hyphen' by hyphen_end.seq;
 
   sub [less_less_hyphen_start.seq less_less_hyphen_middle.seq greater_greater_hyphen_start.seq greater_greater_hyphen_middle.seq bar_bar_hyphen_start.seq bar_bar_hyphen_middle.seq] LIG hyphen' by hyphen_end.seq;
 
   # double middles
-  sub [hyphen_start.seq hyphen_middle.seq] less_less_hyphen_middle.seq        less'    hyphen by LIG;
-  sub [hyphen_start.seq hyphen_middle.seq] less'                              less     hyphen by less_less_hyphen_middle.seq;
-  sub [hyphen_start.seq hyphen_middle.seq] greater_greater_hyphen_middle.seq  greater' hyphen by LIG;
-  sub [hyphen_start.seq hyphen_middle.seq] greater'                           greater  hyphen by greater_greater_hyphen_middle.seq;
-  sub [hyphen_start.seq hyphen_middle.seq] bar_bar_hyphen_middle.seq          bar'     hyphen by LIG;
-  sub [hyphen_start.seq hyphen_middle.seq] bar'                               bar      hyphen by bar_bar_hyphen_middle.seq;
+  sub hyphen_start.seq less_less_hyphen_middle.seq        less'    hyphen by LIG;
+  sub hyphen_start.seq less'                              less     hyphen by less_less_hyphen_middle.seq;
+  sub hyphen_start.seq greater_greater_hyphen_middle.seq  greater' hyphen by LIG;
+  sub hyphen_start.seq greater'                           greater  hyphen by greater_greater_hyphen_middle.seq;
+  sub hyphen_start.seq bar_bar_hyphen_middle.seq          bar'     hyphen by LIG;
+  sub hyphen_start.seq bar'                               bar      hyphen by bar_bar_hyphen_middle.seq;
 
   # single middles
-  sub [hyphen_start.seq hyphen_middle.seq] less'    hyphen by less_hyphen_middle.seq;
-  sub [hyphen_start.seq hyphen_middle.seq] greater' hyphen by greater_hyphen_middle.seq;
-  sub [hyphen_start.seq hyphen_middle.seq] bar'     hyphen by bar_hyphen_middle.seq;
+  sub hyphen_start.seq less'    hyphen by less_hyphen_middle.seq;
+  sub hyphen_start.seq greater' hyphen by greater_hyphen_middle.seq;
+  sub hyphen_start.seq bar'     hyphen by bar_hyphen_middle.seq;
 
   # double ends
   sub [hyphen_start.seq hyphen_middle.seq] less_less_hyphen_end.seq       less'    by LIG;
@@ -972,33 +968,32 @@ lookup hyphen_arrows {
   sub less'    hyphen by less_hyphen_start.seq;
   sub greater' hyphen by greater_hyphen_start.seq;
   sub bar'     hyphen by bar_hyphen_start.seq;
-  sub hyphen' [hyphen less greater bar] by hyphen_start.seq;
+  sub hyphen'  [less greater bar colon exclam] by hyphen_start.seq;
 } hyphen_arrows;
 
 lookup numbersigns {
-  # middle parts
-  sub [numbersign_start.seq numbersign_middle.seq] numbersign' numbersign by numbersign_middle.seq;
+  ignore sub numbersign' numbersign numbersign;
+  ignore sub numbersign numbersign' numbersign;
 
-  # ends
-  sub [numbersign_start.seq numbersign_middle.seq] numbersign' by numbersign_end.seq;
-  
-  # beginnings
-  sub numbersign' numbersign by numbersign_start.seq; 
+  sub numbersign_start.seq numbersign' by numbersign_end.seq;
+  sub numbersign' numbersign by numbersign_start.seq;
 } numbersigns;
 
 lookup underscores {
   # middle parts
-  sub [underscore_start.seq underscore_middle.seq] bar' underscore by bar_underscore_middle.seq;
-
-  sub [underscore_start.seq underscore_middle.seq bar_underscore_middle.seq] underscore' bar underscore by underscore_middle.seq;
-  sub [underscore_start.seq underscore_middle.seq bar_underscore_middle.seq] underscore' underscore by underscore_middle.seq;
+  sub underscore_start.seq bar' underscore by bar_underscore_middle.seq;
 
   # ends
-  sub [underscore_start.seq underscore_middle.seq bar_underscore_middle.seq] underscore' by underscore_end.seq;
-  
+  sub [underscore_start.seq bar_underscore_middle.seq] underscore' by underscore_end.seq;
+
   # beginnings
-  sub underscore' bar underscore by underscore_start.seq; 
-  sub underscore' underscore by underscore_start.seq; 
+  sub underscore' bar underscore by underscore_start.seq;
+
+  ignore sub underscore' underscore underscore;
+  ignore sub underscore' underscore bar underscore;
+  ignore sub [underscore underscore_end.seq] underscore' [bar underscore];
+
+  sub underscore' underscore by underscore_start.seq;
 } underscores;
 
 #Other non-ligature bits
